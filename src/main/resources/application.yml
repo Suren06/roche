@@ -1,0 +1,53 @@
+# Spring DataSource and JPA Configuration
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/roche
+    username: root
+    password: Suren@66
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # Validate schema with Flyway, use 'update' for local dev
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  flyway:
+    enabled: true
+    locations: classpath:db/migration  # Path to your migration scripts
+    baseline-on-migrate: true          # Set baseline if you're integrating Flyway into an existing schema
+    schemas: roche                 # Specify the schema
+  devtools:
+    restart:
+      enabled: true       # Enable auto-restart when code changes are detected
+    livereload:
+      enabled: true       # Enable live reload to automatically refresh the browser
+
+# Management and Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"   # Expose all Actuator endpoints like health, beans, etc.
+  server:
+    port: 8087        # Optional: Use a separate port for actuator
+    servlet:
+      context-path: /actuator # Optional: Access actuator endpoints at /actuator
+
+# Server and Application Configuration
+server:
+  port: 8086                    # Main application port
+  servlet:
+    context-path: /api/v1        # Application's context path
+
+# Logging Configuration
+logging:
+  level:
+    com.bookIn: INFO           # Set logging level for your app's package
+    org.hibernate.SQL: DEBUG   # Enable SQL logging for Hibernate
+    org.flywaydb: DEBUG        # Enable logging for Flyway migrations
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%level] %logger{36} - %msg%n"  # Log format
+  file:
+    max-size: 10MB  # Max size of log file before rollover
+    path: ./logs/bookIn.log  # Path to store the log file

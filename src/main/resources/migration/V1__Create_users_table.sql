@@ -1,0 +1,9 @@
+CREATE TABLE roche.users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    dob DATETIME DEFAULT NULL,
+    created_date DATETIME NOT NULL,
+    updated_date DATETIME NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE
+);
